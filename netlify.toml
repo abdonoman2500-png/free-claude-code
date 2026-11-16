@@ -1,0 +1,10 @@
+# Free Claude Code is a local Python proxy (FastAPI + uvicorn) that must run on
+# the user's own machine. Netlify hosts the project's static landing page.
+[build]
+  publish = "site"
+  command = "mkdir -p site/assets && cp assets/*.png assets/*.svg site/assets/"
+
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"
