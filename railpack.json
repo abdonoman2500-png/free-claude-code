@@ -1,5 +1,9 @@
 {
   "$schema": "https://schema.railpack.com",
+  "packages": {
+    "uv": "0.13.8",
+    "python": "3.14.10"
+  },
   "deploy": {
     "startCommand": "uv run --no-sync fcc-server"
   }
