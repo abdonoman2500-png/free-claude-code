@@ -17,3 +17,7 @@ llama_cache
 /test-results/
 .vscode
 /src/free_claude_code/assets/macos/fcc-desktop-*
+
+# Netlify landing page (copied from /assets at build time)
+/site/assets/
+node_modules/

@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Free Claude Code — شغّل وكلاء البرمجة بنماذج مجانية</title>
+<meta name="description" content="بروكسي محلي مفتوح المصدر يوصل Claude Code وCodex وغيرها من وكلاء البرمجة بأكثر من 61 مزوّد نماذج، منها مزوّدون مجانيون.">
+<link rel="icon" href="assets/free-claude-code-wordmark-dark.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0c0b0a; --panel:#151311; --line:#2a2622; --text:#efe9e2; --muted:#a39a90;
+    --accent:#f97316; --accent-soft:rgba(249,115,22,.12);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--text);font:16px/1.8 "IBM Plex Sans Arabic",system-ui,sans-serif;
+    background-image:radial-gradient(900px 500px at 85% -10%,rgba(249,115,22,.14),transparent 60%);}
+  a{color:var(--accent)}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+  nav{display:flex;justify-content:space-between;align-items:center;padding:20px 0;border-bottom:1px solid var(--line)}
+  nav img{height:40px}
+  nav .links a{color:var(--muted);text-decoration:none;margin-inline-start:22px;font-size:15px}
+  nav .links a:hover{color:var(--text)}
+  header.hero{padding:80px 0 56px;display:grid;gap:28px}
+  .tag{display:inline-block;width:max-content;padding:4px 12px;border:1px solid var(--accent);color:var(--accent);border-radius:999px;font-size:13px}
+  h1{font-size:clamp(34px,5.5vw,60px);line-height:1.25;margin:0;font-weight:700;max-width:16ch}
+  h1 em{font-style:normal;color:var(--accent)}
+  .lead{color:var(--muted);font-size:19px;max-width:60ch;margin:0}
+  .cta{display:flex;gap:12px;flex-wrap:wrap}
+  .btn{padding:12px 22px;border-radius:10px;text-decoration:none;font-weight:500;border:1px solid var(--line);color:var(--text)}
+  .btn.primary{background:var(--accent);border-color:var(--accent);color:#1a0d03}
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:14px;overflow:hidden;margin:16px 0 0}
+  .stats div{padding:22px;border-inline-start:1px solid var(--line)}
+  .stats div:first-child{border-inline-start:0}
+  .stats b{display:block;font-size:30px;color:var(--accent);font-family:"JetBrains Mono",monospace}
+  .stats span{color:var(--muted);font-size:14px}
+  section{padding:64px 0;border-top:1px solid var(--line)}
+  h2{font-size:30px;margin:0 0 8px}
+  .sub{color:var(--muted);margin:0 0 32px}
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px}
+  .card h3{margin:0 0 6px;font-size:18px}
+  .card p{margin:0;color:var(--muted);font-size:15px}
+  .steps{counter-reset:s;display:grid;gap:20px}
+  .step{display:grid;grid-template-columns:48px 1fr;gap:16px}
+  .step::before{counter-increment:s;content:counter(s);width:40px;height:40px;border-radius:50%;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center;font-weight:700;font-family:"JetBrains Mono",monospace}
+  .step h3{margin:4px 0 8px;font-size:19px}
+  .step p{margin:0 0 10px;color:var(--muted)}
+  .code{direction:ltr;text-align:left;position:relative;background:#080706;border:1px solid var(--line);border-radius:10px;padding:14px 16px;padding-right:76px;font:14px/1.6 "JetBrains Mono",monospace;overflow-x:auto;white-space:pre;margin:0 0 10px;color:#f3d9c4}
+  .code .lbl{display:block;color:var(--muted);font-size:12px;margin-bottom:4px}
+  .copy{position:absolute;top:10px;right:10px;background:var(--panel);color:var(--muted);border:1px solid var(--line);border-radius:6px;padding:3px 10px;font:12px "IBM Plex Sans Arabic",sans-serif;cursor:pointer}
+  .copy:hover{color:var(--text)}
+  .shots{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .shots figure{margin:0;background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+  .shots img{width:100%;display:block}
+  .shots figcaption{padding:10px 14px;color:var(--muted);font-size:14px}
+  .chips{display:flex;flex-wrap:wrap;gap:8px}
+  .chips span{direction:ltr;padding:6px 12px;border:1px solid var(--line);border-radius:999px;font-size:14px;background:var(--panel)}
+  .note{background:var(--accent-soft);border:1px solid rgba(249,115,22,.35);border-radius:12px;padding:16px 18px;color:var(--text)}
+  footer{border-top:1px solid var(--line);padding:32px 0 48px;color:var(--muted);font-size:14px}
+  @media (max-width:820px){
+    .grid,.shots{grid-template-columns:1fr}
+    .stats{grid-template-columns:1fr 1fr}
+    .stats div:nth-child(3){border-inline-start:0}
+    .stats div:nth-child(n+3){border-top:1px solid var(--line)}
+    nav .links{display:none}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav>
+    <img src="assets/free-claude-code-wordmark-dark.svg" alt="Free Claude Code">
+    <div class="links">
+      <a href="/">النسخة على الويب</a>
+      <a href="#features">المميزات</a>
+      <a href="#start">البدء السريع</a>
+      <a href="#api">الواجهة البرمجية</a>
+      <a href="https://github.com/Alishahryar1/free-claude-code">GitHub</a>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <span class="tag">مفتوح المصدر · AGPL-3.0</span>
+    <h1>شغّل وكلاء البرمجة <em>بنماذج مجانية</em></h1>
+    <p class="lead">Free Claude Code (FCC) بروكسي يعمل على جهازك. يوصل Claude Code وCodex وغيرها من أدوات البرمجة بالذكاء الاصطناعي بأي نموذج من أكثر من 61 مزوّدًا، مع الحفاظ على البث المباشر واستخدام الأدوات والتفكير.</p>
+    <div class="cta">
+      <a class="btn primary" href="/">جرّب النسخة على الويب</a>
+      <a class="btn" href="#start">التثبيت المحلي</a>
+      <a class="btn" href="https://github.com/Alishahryar1/free-claude-code">الكود المصدري على GitHub</a>
+    </div>
+    <div class="stats">
+      <div><b>61+</b><span>مزوّد نماذج</span></div>
+      <div><b>12</b><span>أداة برمجة مدعومة</span></div>
+      <div><b>1.3B+</b><span>توكن مجاني شهريًا</span></div>
+      <div><b>90%</b><span>استهلاك أقل للتوكنات</span></div>
+    </div>
+  </header>
+
+  <section id="features">
+    <h2>المميزات</h2>
+    <p class="sub">كل ما تحتاجه لتواصل البرمجة حتى لو تعطّل أحد المزوّدين.</p>
+    <div class="grid">
+      <div class="card"><h3>أي أداة، أي نموذج</h3><p>وجّه Fable وOpus وSonnet وHaiku في Claude Code إلى أي نموذج مدعوم، من نفس قائمة <code>/model</code>.</p></div>
+      <div class="card"><h3>أربع واجهات API</h3><p>Anthropic Messages وOpenAI Chat Completions وOpenAI Responses وGemini. كل نموذج يعمل على كل واجهة.</p></div>
+      <div class="card"><h3>موثوقية عالية</h3><p>إعادة المحاولة تلقائيًا، وحدود معدل قابلة للضبط، وتحويل تلقائي بين النماذج والمزوّدين ومفاتيح API.</p></div>
+      <div class="card"><h3>من الهاتف</h3><p>نفّذ مهام البرمجة من Discord أو Telegram، وأرسل ملاحظات صوتية عبر Whisper.</p></div>
+      <div class="card"><h3>تطبيقات ومحررات</h3><p>Claude Desktop وCodex App وVS Code وJetBrains، تتصل بنقرة واحدة من لوحة التحكم.</p></div>
+      <div class="card"><h3>توفير التوكنات</h3><p>استهلاك أقل بنسبة تصل إلى 90% باستخدام RTK وHeadroom.</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>الأدوات المدعومة</h2>
+    <p class="sub">12 أداة برمجة تعمل مع FCC.</p>
+    <div class="chips">
+      <span>Claude Code</span><span>Codex</span><span>Pi</span><span>OpenCode</span><span>Cline</span><span>Hermes</span>
+      <span>DeepSeek Harness</span><span>Grok Build</span><span>Muse Code</span><span>Aider</span><span>Antigravity CLI</span><span>VS Code Chat</span>
+    </div>
+  </section>
+
+  <section>
+    <div class="shots">
+      <figure><img src="assets/pic.png" alt="Claude Code يعمل مع FCC" loading="lazy"><figcaption>Claude Code يعمل مع FCC.</figcaption></figure>
+      <figure><img src="assets/admin-page.png" alt="لوحة تحكم FCC" loading="lazy"><figcaption>لوحة التحكم لإدارة المزوّدين والنماذج.</figcaption></figure>
+      <figure><img src="assets/cc-model-picker.png" alt="اختيار النموذج في Claude Code" loading="lazy"><figcaption>اختر نموذج FCC من قائمة <code>/model</code> في Claude Code.</figcaption></figure>
+      <figure><img src="assets/browser-code-session.png" alt="جلسة Codex في المتصفح" loading="lazy"><figcaption>جلسة Codex داخل واجهة FCC في المتصفح.</figcaption></figure>
+    </div>
+  </section>
+
+  <section id="start">
+    <h2>البدء السريع</h2>
+    <p class="sub">يعمل FCC على جهازك أنت، وليس على هذا الموقع.</p>
+    <div class="steps">
+      <div class="step"><div>
+        <h3>التثبيت</h3>
+        <p>اختر أداة برمجة واحدة على الأقل عندما يطلب منك ذلك.</p>
+        <pre class="code"><span class="lbl">macOS / Linux</span>curl -fsSL "https://raw.githubusercontent.com/Alishahryar1/free-claude-code/main/scripts/install.sh" | sh</pre>
+        <pre class="code"><span class="lbl">Windows PowerShell</span>&amp; ([scriptblock]::Create((irm "https://raw.githubusercontent.com/Alishahryar1/free-claude-code/main/scripts/install.ps1")))</pre>
+      </div></div>
+      <div class="step"><div>
+        <h3>شغّل FCC</h3>
+        <p>على Windows وmacOS افتح <b>Free Claude Code</b> من سطح المكتب. على Linux شغّل الأمر التالي. تُفتح لوحة التحكم تلقائيًا.</p>
+        <pre class="code">fcc-server</pre>
+      </div></div>
+      <div class="step"><div>
+        <h3>أضف مفتاح مزوّد</h3>
+        <p>أنشئ مفتاحًا مجانيًا من <a href="https://build.nvidia.com/settings/api-keys">NVIDIA NIM</a>، ثم من لوحة التحكم افتح <b>Providers</b> ← NVIDIA NIM ← <b>Add key</b> ← <b>Save</b> ← <b>Apply</b>.</p>
+      </div></div>
+      <div class="step"><div>
+        <h3>شغّل أداة البرمجة</h3>
+        <pre class="code">fcc-claude    # Claude Code
+fcc-codex     # Codex
+fcc-opencode  # OpenCode</pre>
+      </div></div>
+    </div>
+  </section>
+
+  <section id="api">
+    <h2>استخدام الواجهة البرمجية مباشرة</h2>
+    <p class="sub">أي عميل أو SDK يمكنه الاتصال بـ FCC على <code dir="ltr">http://127.0.0.1:8082</code> بعد تشغيله على جهازك.</p>
+    <pre class="code">curl http://127.0.0.1:8082/v1/messages \
+  -H "Content-Type: application/json" \
+  -d '{
+    "model": "nvidia_nim/nvidia/nemotron-3-ultra-550b-a55b",
+    "max_tokens": 1024,
+    "messages": [{"role": "user", "content": "Hello!"}]
+  }'</pre>
+    <p class="note">ملاحظة: النسخة الكاملة من FCC (61 مزوّدًا، Discord وTelegram، وربط التطبيقات) تعمل على جهازك. أما <a href="/">النسخة على الويب</a> فتوفر محادثة وبروكسي متوافق مع Claude Code عبر نماذج Netlify AI Gateway.</p>
+  </section>
+
+  <footer>
+    مشروع مستقل مفتوح المصدر، وغير تابع لـ Anthropic أو معتمد منها. Claude وClaude Code علامتان تجاريتان لـ Anthropic.
+    · <a href="https://github.com/Alishahryar1/free-claude-code/issues">الإبلاغ عن مشكلة</a>
+    · الرخصة: AGPL-3.0-only
+  </footer>
+</div>
+<script>
+  document.querySelectorAll('pre.code').forEach(function(pre){
+    var b=document.createElement('button');b.className='copy';b.type='button';b.textContent='نسخ';
+    b.addEventListener('click',function(){
+      var c=pre.cloneNode(true);c.querySelectorAll('.lbl,.copy').forEach(function(n){n.remove()});
+      navigator.clipboard.writeText(c.textContent.trim()).then(function(){b.textContent='تم النسخ';setTimeout(function(){b.textContent='نسخ'},1500)});
+    });
+    pre.appendChild(b);
+  });
+</script>
+</body>
+</html>
